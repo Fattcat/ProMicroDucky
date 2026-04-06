@@ -20,5 +20,5 @@ Supports SK lang keyboard
 
 ## Example
 - inside inject.txt is:
-LocaleSK
-STRING Ahoj, toto je test :D \ - <> ,. -_- () [ {} !] /
+  - LocaleSK
+  - STRING Ahoj, toto je test :D \ - <> ,. -_- () [ {} !] /
