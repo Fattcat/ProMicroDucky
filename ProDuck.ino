@@ -181,13 +181,31 @@ void sendSlovakDiacritic(uint8_t b1, uint8_t b2) {
         } break;
       
       // Veľké s mäkčeňom
-      case 0x8C: case 0x87: case 0x94: case 0x90: case 0xB9: case 0xA0: case 0xBD:
+      // PRIDANÉ 0x8E (Ď) do zoznamu case
+      case 0x8E: case 0x8C: case 0x87: case 0x94: case 0x90: case 0xB9: case 0xA0: case 0xBD:
         {
-          keyboard::type(46, 0,0,0,0,0, 2);
-          delay(10);
-          char base = (b2==0x8C)?'C':(b2==0x87)?'N':(b2==0x94)?'T':
-                      (b2==0x90)?'R':(b2==0xB9)?'L':(b2==0xA0)?'S':'Z';
-          sendASCII(base);
+          // 1. Mäkčeň (Shift + klávesa pri Backspace)
+          keyboard::type(46, 0, 0, 0, 0, 0, 2); 
+          delay(15); // Mierne zvýšený delay pre stabilitu OS
+          
+          // Logika priradenia základného znaku
+          char base;
+          if (b2 == 0x8E) base = 'D';
+          else if (b2 == 0x8C) base = 'C';
+          else if (b2 == 0x87) base = 'N';
+          else if (b2 == 0x94) base = 'T';
+          else if (b2 == 0x90) base = 'R';
+          else if (b2 == 0xB9) base = 'L';
+          else if (b2 == 0xA0) base = 'S';
+          else                 base = 'Z'; // b2 == 0xBD
+
+          // 2. Odoslanie znaku so správnym modifikátorom (Shift)
+          uint8_t mod, code;
+          if (getSKKey(base, &mod, &code)) {
+            keyboard::type(code, 0, 0, 0, 0, 0, mod);
+          }
+          
+          // TU SOM ODSTRÁNIL sendASCII(base), aby sa znak nepísal dvakrát.
         } break;
     }
   }
