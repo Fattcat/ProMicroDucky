@@ -1,5 +1,6 @@
 # ProMicroDucky
 Supports SK lang keyboard
+- FOR EDUCATIONAL PURPOSES ONLY !
 ## Connection
 
 ### ProMicro - SD Module
